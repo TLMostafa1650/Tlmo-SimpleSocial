@@ -6,8 +6,6 @@ import { COLORS } from "./constants/colors";
 import { FONTS } from "./constants/fonts";
 import { useEffect } from "react";
 
-
-
 import Avatar from "./components/Avatar";
 import ProfileView from "./components/ProfileView";
 import Sidebar from "./components/Sidebar";
@@ -15,7 +13,6 @@ import PostCard from "./components/PostCard";
 import Modal from "./components/Modal";
 import CreatePost from "./components/CreatePost";
 import Btn from "./components/Btn";
-
 
 const INIT_STATE = {
   posts: INIT_POSTS,
@@ -27,7 +24,6 @@ const INIT_STATE = {
 };
 
 export default function App() {
-
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,34 +63,33 @@ export default function App() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
+  const theme = {
+    bg: darkMode ? "#0F172A" : COLORS.bg,
+    card: darkMode ? "#111827" : COLORS.card,
+    text: darkMode ? "#F9FAFB" : COLORS.text,
+    muted: darkMode ? "#94A3B8" : COLORS.muted,
+    border: darkMode ? "#1E293B" : COLORS.border,
   };
 
-  window.addEventListener("resize", handleResize);
-
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
-
-useEffect(() => {
-  localStorage.setItem("darkMode", darkMode);
-}, [darkMode]);
-
-
-const theme = {
-  bg: darkMode ? "#0F172A" : COLORS.bg,
-  card: darkMode ? "#111827" : COLORS.card,
-  text: darkMode ? "#F9FAFB" : COLORS.text,
-  muted: darkMode ? "#94A3B8" : COLORS.muted,
-  border: darkMode ? "#1E293B" : COLORS.border,
-};
-
-useEffect(() => {
-  document.body.style.background = theme.bg;
-  document.body.style.color = theme.text;
-  document.documentElement.style.background = theme.bg;
-}, [darkMode]);
+  useEffect(() => {
+    document.body.style.background = theme.bg;
+    document.body.style.color = theme.text;
+    document.documentElement.style.background = theme.bg;
+  }, [darkMode]);
 
   return (
     <div
@@ -131,7 +126,7 @@ useEffect(() => {
           <div
             style={{
               fontFamily: FONTS.heading,
-              fontSize: 15,
+              fontSize: 25,
               fontWeight: "bold",
               color: COLORS.accent,
               letterSpacing: -0.5,
@@ -140,66 +135,77 @@ useEffect(() => {
           >
             TLMO
           </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              gap: 2,
-              flexWrap: "nowrap",
-            }}
-          >
-            {navItems.map((item) => {
-              const isActive = view === item.id;
+          {!isMobile && (
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                gap: 2,
+                flexWrap: "nowrap",
+              }}
+            >
+              {navItems.map((item) => {
+                const isActive = view === item.id;
 
-              return (
-                <div
-                  key={item.id}
-                  onClick={() => dispatch({ type: "SET_VIEW", view: item.id })}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    padding: "3px 6px",
-                    borderRadius: 999,
-                    cursor: "pointer",
-                    fontFamily: FONTS.body,
-                    fontWeight: 600,
-                    fontSize: 14,
-                    transition: "all 0.25s ease",
-                    color: isActive ? "#fff" : theme.muted,
-                    background: isActive
-                      ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
-                      : "transparent",
-                    boxShadow: isActive
-                      ? "0 6px 18px rgba(99,102,241,0.35)"
-                      : "none",
-                    minWidth: 42,
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive)
-                      e.currentTarget.style.background = "rgba(0,0,0,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive)
-                      e.currentTarget.style.background = "transparent";
-                  }}
-                >
-                  <span
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() =>
+                      dispatch({ type: "SET_VIEW", view: item.id })
+                    }
                     style={{
-                      fontSize: isMobile ? 14 : 18,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      padding: "3px 6px",
+                      borderRadius: 999,
+                      cursor: "pointer",
+                      fontFamily: FONTS.body,
+                      fontWeight: 600,
+                      fontSize: 14,
+                      transition: "all 0.25s ease",
+                      color: isActive ? "#fff" : theme.muted,
+                      background: isActive
+                        ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
+                        : "transparent",
+                      boxShadow: isActive
+                        ? "0 6px 18px rgba(99,102,241,0.35)"
+                        : "none",
+                      minWidth: 42,
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive)
+                        e.currentTarget.style.background = "rgba(0,0,0,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive)
+                        e.currentTarget.style.background = "transparent";
                     }}
                   >
-                    {item.icon}
-                  </span>
+                    <span
+                      style={{
+                        fontSize: 18,
+                      }}
+                    >
+                      {item.icon}
+                    </span>
 
-                  {!isMobile && <span className="nav-label">{item.label}</span>}
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <span className="nav-label">{item.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <div
+            style={{
+              display: "flex",
+              gap: 6,
+              alignItems: "center",
+              marginLeft: "auto",
+            }}
+          >
             <button
               onClick={() => setDarkMode(!darkMode)}
               style={{
