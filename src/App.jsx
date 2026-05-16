@@ -193,7 +193,7 @@ useEffect(() => {
               );
             })}
           </div>
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
             <button
               onClick={() => setDarkMode(!darkMode)}
               style={{

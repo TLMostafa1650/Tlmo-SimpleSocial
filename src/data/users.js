@@ -20,7 +20,7 @@ export const INIT_USERS = [
     bio: "Wrestler. Actor. The Tribal Chief.",
     location: "Florida, USA",
     website: "Reigns.Cheif",
-    followers: "7.5M",
+    followers: 99599,
     following: 210,
     joined: "Sep 2012",
     coverColor: "#1A5FA8",
