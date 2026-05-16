@@ -125,14 +125,14 @@ useEffect(() => {
             height: 60,
             display: "flex",
             alignItems: "center",
-            gap: 20,
+            gap: 5,
           }}
         >
           <div
             style={{
               fontFamily: FONTS.heading,
-              fontSize: 22,
-              fontWeight: 700,
+              fontSize: 15,
+              fontWeight: "bold",
               color: COLORS.accent,
               letterSpacing: -0.5,
               flexShrink: 0,
@@ -145,8 +145,8 @@ useEffect(() => {
               flex: 1,
               display: "flex",
               justifyContent: "center",
-              gap: 10,
-              flexWrap: "wrap",
+              gap: 2,
+              flexWrap: "nowrap",
             }}
           >
             {navItems.map((item) => {
@@ -161,7 +161,7 @@ useEffect(() => {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 8,
-                    padding: "8px 14px",
+                    padding: "3px 6px",
                     borderRadius: 999,
                     cursor: "pointer",
                     fontFamily: FONTS.body,
@@ -186,14 +186,20 @@ useEffect(() => {
                       e.currentTarget.style.background = "transparent";
                   }}
                 >
-                  <span style={{ fontSize: 18 }}>{item.icon}</span>
+                  <span
+                    style={{
+                      fontSize: isMobile ? 14 : 18,
+                    }}
+                  >
+                    {item.icon}
+                  </span>
 
                   {!isMobile && <span className="nav-label">{item.label}</span>}
                 </div>
               );
             })}
           </div>
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <button
               onClick={() => setDarkMode(!darkMode)}
               style={{
